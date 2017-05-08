@@ -5,7 +5,7 @@
 module.exports = function (dependencies,helper) {
 
   let router  = dependencies.express.Router();
-  let middlewares = require('../Middlewares/index')(dependencies);
+  let middlewares = require('../Middlewares/index')(dependencies,helper);
   
   
 

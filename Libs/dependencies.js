@@ -18,6 +18,7 @@ module.exports = function (app, express,config) {
     mongoose : mongoose,
     fs : require('fs-extra'),
     dbConnection : dbConnection,
+    jwtWhiteSheet : require('../Configs/jwtwhitesheet'),
     models : models,
     bcrypt : require('bcrypt'),
     jwt : require('jsonwebtoken'),

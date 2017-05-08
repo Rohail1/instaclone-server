@@ -17,7 +17,7 @@ module.exports = function ({mongoose}) {
   }
 
   return {
-    getParams : getParams
+    getParams
   }
 
 };

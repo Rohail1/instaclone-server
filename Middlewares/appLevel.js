@@ -3,10 +3,10 @@
  */
 
 
-module.exports = function ({mongoose}) {
+module.exports = function ({messages, jwt,models,jwtWhiteSheet,config},helpers) {
 
   // This middleware get all the inputs from params ,query ,body and place them in req.inputs
-  function getInputs (req, res, next) {
+  const getInputs =  (req, res, next) => {
     req.inputs = {};
     for(let prop in  req.body) {
       if(req.body.hasOwnProperty(prop))
@@ -17,11 +17,30 @@ module.exports = function ({mongoose}) {
         req.inputs[prop] = req.query[prop];
     }
     next();
-  }
+  };
+
+  const jwtVerification = async (req, res, next) => {
+    try {
+
+      if(helpers.isPublicRoute(req.path))
+        return next();
+      let token = req.headers['instaclone-token'];
+      let decodedToken = jwt.verify(token, config.jwtSecret);
+      let user = await models.User.findOne({_id : decodedToken._id});
+      if(!user)
+        return helper.sendResponse(res,messages.INVALID_JWT);
+      req.userDetails = user;
+      next();
+    }catch (ex){
+      return helpers.sendResponse(res,messages.INVALID_JWT)
+    }
+  };
 
   // Array Order of the middleware Matters so we follow FIFO
+
   return [
-    getInputs
+    getInputs,
+    jwtVerification
   ]
 
 };

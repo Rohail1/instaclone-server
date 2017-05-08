@@ -47,6 +47,11 @@ module.exports = {
     message: "you are not authorized to complete this action.",
     success : false
   },
+  INVALID_JWT: {
+    code: 403,
+    message: "Either token has expired or is invalid. Please login again.",
+    success : false
+  },
   BAD_REQUEST:{
     code:400,
     message : 'request invalid.',

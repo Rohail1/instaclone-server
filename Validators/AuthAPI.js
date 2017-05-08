@@ -34,8 +34,8 @@ module.exports = function ({joi}) {
   };
 
   return  {
-    signupValidator : signupValidator,
-    loginValidator : loginValidator
+    signupValidator,
+    loginValidator
   }
 
 };

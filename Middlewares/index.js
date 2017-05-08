@@ -3,12 +3,12 @@
  */
 
 
-module.exports = function (dependencies) {
+module.exports = function (dependencies,helper) {
 
   let middlewares = {};
 
-  middlewares.APP = require('./appLevel')(dependencies);
-  middlewares.ROUTE = require('./routeLevel')(dependencies);
+  middlewares.APP = require('./appLevel')(dependencies,helper);
+  middlewares.ROUTE = require('./routeLevel')(dependencies,helper);
 
   return middlewares;
 

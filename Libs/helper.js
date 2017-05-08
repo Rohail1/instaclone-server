@@ -3,7 +3,7 @@
  */
 
 
-module.exports=  function ({mongoose,bcrypt}) {
+module.exports=  function ({mongoose,bcrypt,jwtWhiteSheet}) {
 
 
   return {
@@ -46,6 +46,15 @@ module.exports=  function ({mongoose,bcrypt}) {
       }else {
         return mongoose.Types.ObjectId();
       }
+    },
+    isPublicRoute : (path) => {
+      for (let i = 0; i < jwtWhiteSheet.length; i++) {
+        if (path.includes(jwtWhiteSheet[i])) {
+          return true;
+        }
+      }
+      return false;
+
     }
   };
 };
