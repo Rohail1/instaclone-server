@@ -19,13 +19,9 @@ module.exports = function ({mongoose}) {
     next();
   }
 
-  function dummyAPPMiddleware (req, res, next) {
-    next();
-  }
   // Array Order of the middleware Matters so we follow FIFO
   return [
-    getInputs,
-    dummyAPPMiddleware
+    getInputs
   ]
 
 };

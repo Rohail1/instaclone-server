@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-boilerplate",
+  "name": "instaclone-server",
   "version": "1.0.0",
-  "description": "A Node.js boilerplate for future nodejs projects",
+  "description": "A Node.js Server for instaclone App",
   "main": "server.js",
   "scripts": {
     "start": "node server",
@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/Rohail1/nodejs-boilerplate#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.16.1",
     "co": "^4.6.0",
     "cors": "^2.8.1",

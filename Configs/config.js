@@ -12,9 +12,9 @@ const configurations = {
     port : 3000,
     rootPath : rootPath,
     db: {
-      name : "db Name",
+      name : "instaclone",
       mongo : {
-        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/dbName",
+        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/instaclone",
         username : process.env.MONGOUSERNAME || '',
         password : process.env.MONGOPASSWORD || ''
       }
@@ -33,9 +33,9 @@ const configurations = {
     rootPath : rootPath,
     logStyle : 'combined',
     db: {
-      name : "db Name",
+      name : "instaclone",
       mongo : {
-        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/dbName",
+        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/instaclone",
         username : process.env.MONGOUSERNAME || '',
         password : process.env.MONGOPASSWORD || ''
       }
@@ -59,9 +59,9 @@ const configurations = {
       AUTH : '/auth'
     },
     db: {
-      name : "db Name",
+      name : "instaclone",
       mongo : {
-        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/dbName",
+        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/instaclone",
         username : process.env.MONGOUSERNAME || '',
         password : process.env.MONGOPASSWORD || ''
       }

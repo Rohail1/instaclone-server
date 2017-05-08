@@ -19,9 +19,9 @@ module.exports = function (app, express,config) {
     fs : require('fs-extra'),
     dbConnection : dbConnection,
     models : models,
+    bcrypt : require('bcrypt'),
     messages : require('../Configs/messages'),
     path : require('path'),
-    co : require('co'),
     joi : require('joi')
   }
 

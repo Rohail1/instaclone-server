@@ -8,10 +8,19 @@ module.exports = function(Schema){
     _id : {
       type : Schema.Types.ObjectId,
     },
-    firstName : {
+    firstname : {
       type : String
     },
-    lastName : {
+    lastname : {
+      type : String
+    },
+    email : {
+      type : String
+    },
+    password : {
+      type : String
+    },
+    salt : {
       type : String
     }
   },{

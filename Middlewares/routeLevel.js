@@ -16,18 +16,7 @@ module.exports = function ({mongoose}) {
     next();
   }
 
-  function dummyRouteLevelMiddleware1(req, res, next) {
-    console.log('Hello');
-    next();
-  }
-
-  function dummyRouteLevelMiddleware2(req, res, next) {
-    console.log('Hello2');
-    next();
-  }
   return {
-    dummyRouteLevelMiddleware1 : dummyRouteLevelMiddleware1,
-    dummyRouteLevelMiddleware2 : dummyRouteLevelMiddleware2,
     getParams : getParams
   }
 

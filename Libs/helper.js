@@ -3,19 +3,25 @@
  */
 
 
-module.exports=  function ({mongoose}) {
+module.exports=  function ({mongoose,bcrypt}) {
 
 
-  let helpers = {
+  return {
 
-    copyObjects: function clone(a,propToExclude) {
+    generateSalt : (saltRounds) =>{
+      return bcrypt.genSalt(saltRounds);
+    },
+    generateHash : (password,salt) =>{
+      return bcrypt.hash(password,salt);
+    },
+    copyObjects: (a,propToExclude) => {
       let obj = JSON.parse(JSON.stringify(a));
       if(propToExclude)
         for(let i =0;i<propToExclude.length;i++)
           delete obj[propToExclude[i]];
       return obj;
     },
-    sendResponse : function (res, message,data) {
+    sendResponse :  (res, message,data) => {
       let responseMessage = {
         success : message.success,
         message : message.message
@@ -24,14 +30,14 @@ module.exports=  function ({mongoose}) {
         responseMessage.data = data;
       return res.status(message.code).json(responseMessage);
     },
-    sendError : function (res,error) {
+    sendError : (res,error) => {
       let responseMessage = {
         success : false,
         message : error.message
       };
       return res.status(500).json(responseMessage);
     },
-    generateObjectId : function (id) {
+    generateObjectId : (id) => {
       if(id){
         return mongoose.Types.ObjectId(id);
       }else {
@@ -39,5 +45,4 @@ module.exports=  function ({mongoose}) {
       }
     }
   };
-  return helpers;
 };

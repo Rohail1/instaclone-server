@@ -12,6 +12,11 @@ module.exports = {
     message :'Authentication failed. Wrong credentials.',
     success: false
   },
+  EMAIL_ALREADY_EXISIT:{
+    code: 400,
+    message :'Email address already exisit. Cannot signup',
+    success: false
+  },
   SUCCESSFUL_LOGIN: {
     code: 200,
     message :'Successfully log in!',
