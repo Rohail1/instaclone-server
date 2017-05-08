@@ -2,9 +2,9 @@
  * Created by Rohail on 5/8/2017.
  */
 
-module.exports.setupFunction = function ({config,messages,models},helper,middlewares,validator) {
+module.exports.setupFunction = function ({config,messages,models,jwt},helper,middlewares,validator) {
 
-  async function signup(req,res) {
+  const signup = async (req,res) => {
 
     try {
       let validated = await validator.signupValidator(req.inputs);
@@ -22,12 +22,43 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
       user.email = req.inputs.email;
       user.password = password;
       user.salt = salt;
+      let payload = {
+        _id : user._id,
+        email : user.email
+      };
+      user.jwt = jwt.sign(payload,config.jwtSecret);
       await user.save();
       return helper.sendResponse(res,messages.SUCCESSFUL,user);
-    }catch (ex){
+    }
+    catch (ex){
       return helper.sendError(res,ex)
     }
-  }
+  };
+
+  const login = async (req,res) => {
+    try {
+      let validated = await validator.loginValidator(req.inputs);
+      if(validated.error)
+        throw new Error(validated.error.message);
+      let user = await models.User.findOne({email: req.inputs.email});
+      if(!user)
+        return helper.sendResponse(res,messages.AUTHENTICATION_FAILED);
+      let isAuthenticated = await helper.authenticatePassword(req.inputs.password,user.password);
+      if(!isAuthenticated)
+        return helper.sendResponse(res,messages.AUTHENTICATION_FAILED);
+      let payload = {
+        _id : user._id,
+        email : user.email
+      };
+      user.jwt = jwt.sign(payload,config.jwtSecret);
+      await user.save();
+      let dataToSend = helper.copyObjects(user,['password','salt']);
+      return helper.sendResponse(res,messages.SUCCESSFUL,dataToSend);
+    }
+    catch (ex){
+      return helper.sendError(res,ex)
+    }
+  };
 
   module.exports.APIs = {
 
@@ -37,6 +68,13 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
       prefix : config.API_PREFIX.AUTH,
       middlewares : [],
       handler : signup
+    },
+    login : {
+      route : '/login',
+      method : 'POST',
+      prefix : config.API_PREFIX.AUTH,
+      middlewares : [],
+      handler : login
     }
 
   };

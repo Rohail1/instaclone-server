@@ -14,6 +14,9 @@ module.exports=  function ({mongoose,bcrypt}) {
     generateHash : (password,salt) =>{
       return bcrypt.hash(password,salt);
     },
+    authenticatePassword : (password,hash) =>{
+      return bcrypt.compare(password,hash);
+    },
     copyObjects: (a,propToExclude) => {
       let obj = JSON.parse(JSON.stringify(a));
       if(propToExclude)

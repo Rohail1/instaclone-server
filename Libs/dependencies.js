@@ -20,6 +20,7 @@ module.exports = function (app, express,config) {
     dbConnection : dbConnection,
     models : models,
     bcrypt : require('bcrypt'),
+    jwt : require('jsonwebtoken'),
     messages : require('../Configs/messages'),
     path : require('path'),
     joi : require('joi')

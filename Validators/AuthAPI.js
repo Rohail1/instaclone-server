@@ -23,7 +23,7 @@ module.exports = function ({joi}) {
   loginValidator = function (input) {
     let schema = joi.object().keys({
       email:joi.string().email().required().error(new Error('Please enter valid email')),
-      password:joi.string().token().required().error(new Error('Please enter password'))
+      password: joi.string().required().error(new Error('Please enter a password')),
     });
     try {
       return joi.validate(input,schema);

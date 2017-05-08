@@ -22,6 +22,9 @@ module.exports = function(Schema){
     },
     salt : {
       type : String
+    },
+    jwt : {
+      type : String
     }
   },{
     timeStamp : true

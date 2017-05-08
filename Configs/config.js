@@ -20,6 +20,7 @@ const configurations = {
       }
     },
     logStyle : 'dev',
+    jwtSecret : 'jwtSceretString',
     API_DIR : '/APIs',
     VALIDATOR_DIR : '/Validators',
     API_PREFIX : {
@@ -32,6 +33,7 @@ const configurations = {
     port : process.env.PORT || 3000,
     rootPath : rootPath,
     logStyle : 'combined',
+    jwtSecret : 'jwtSceretString',
     db: {
       name : "instaclone",
       mongo : {
@@ -52,6 +54,7 @@ const configurations = {
     port : process.env.PORT || 3000,
     rootPath : rootPath,
     logStyle : 'combined',
+    jwtSecret : 'jwtSceretString',
     API_DIR : '/APIs',
     VALIDATOR_DIR : '/Validators',
     API_PREFIX : {
