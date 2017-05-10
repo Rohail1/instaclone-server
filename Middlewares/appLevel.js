@@ -3,7 +3,7 @@
  */
 
 
-module.exports = function ({messages, jwt,models,jwtWhiteSheet,config},helpers) {
+module.exports = function ({messages, jwt,models,config},helpers) {
 
   // This middleware get all the inputs from params ,query ,body and place them in req.inputs
   const getInputs =  (req, res, next) => {
