@@ -2,6 +2,7 @@
  * Created by Rohail Najam on 2/5/2017.
  */
 
+require('dotenv').config();
 const express = require('express');
 let app = express();
 app.locals.env = process.env.NODE_ENV = process.env.NODE_ENV || "development";
