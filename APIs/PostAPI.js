@@ -58,6 +58,25 @@ module.exports.setupFunction = function ({config,messages,models,enums},helper,m
     }
   };
 
+  const deletePost = async (req,res) => {
+
+    try {
+      let postQuery = {
+        _id : req.inputs.postId,
+        userId : req.userDetails._id
+      };
+      let post = await models.Post.findOneAndRemove(postQuery);
+      await Promise.all([
+        models.Comment.remove({postId : post._id}),
+        helper.deleteCloudinaryImage(post.media.cloudinaryPublicId)
+      ]);
+      return helper.sendResponse(res,messages.SUCCESSFUL);
+    }
+    catch (ex){
+      return helper.sendError(res,ex)
+    }
+  };
+
   module.exports.APIs = {
 
     createPost : {
@@ -80,6 +99,13 @@ module.exports.setupFunction = function ({config,messages,models,enums},helper,m
       prefix : config.API_PREFIX.API,
       middlewares : [],
       handler : getPostDetails
+    },
+    deletePost : {
+      route : '/posts/:postId',
+      method : 'DELETE',
+      prefix : config.API_PREFIX.API,
+      middlewares : [],
+      handler : deletePost
     },
   };
 
