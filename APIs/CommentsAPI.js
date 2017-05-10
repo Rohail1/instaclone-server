@@ -3,14 +3,20 @@
  */
 
 
-module.exports.setupFunction = function ({config,messages,models,enums},helper,middlewares,validator,services) {
+module.exports.setupFunction = function ({config,messages,models},helper,middlewares,validator,services) {
 
   const getAllComments = async (req,res) => {
 
     try {
+      let validated = await validator.getCommentsValidator(req.inputs);
+      if(validated.error)
+        throw new Error(validated.error.message);
       let skip = req.query.skip || 0;
       let limit = req.query.limit || 10;
-      let comments = models.Comment.find({}).sort("createdAt").skip(skip).limit(limit);
+      let commentQuery = {
+        postId : req.inputs.postId
+      };
+      let comments = models.Comment.find(commentQuery).sort("createdAt").skip(skip).limit(limit);
       if(!comments)
         return helper.sendResponse(res,messages.SUCCESSFUL,[]);
       return helper.sendResponse(res,messages.SUCCESSFUL,comments);
@@ -45,11 +51,31 @@ module.exports.setupFunction = function ({config,messages,models,enums},helper,m
     if(!req.isOwner)
       return helper.sendResponse(res,messages.FORBIDDEN);
     try {
+      let commentQuery = {
+        postId : req.inputs.postId,
+        userId : req.userDetails._id,
+        _id : req.inputs.commentId
+      };
+      await models.Comment.findOneAndRemove(commentQuery);
+      return helper.sendResponse(res,messages.SUCCESSFUL);
+    }
+    catch (ex){
+      return helper.sendError(res,ex)
+    }
+  };
+
+  const updateComment= async (req,res) => {
+    let validated = await validator.updateCommentValidator(req.inputs);
+    if(validated.error)
+      throw new Error(validated.error.message);
+    if(!req.isOwner)
+      return helper.sendResponse(res,messages.FORBIDDEN);
+    try {
       let postQuery = {
         _id : req.inputs.postId,
         userId : req.userDetails._id
       };
-      let post = await models.Post.findOneAndRemove(postQuery);
+      let post = await models.Post.findOneAndUpdate(postQuery);
       await Promise.all([
         models.Comment.remove({postId : post._id}),
         helper.deleteCloudinaryImage(post.media.cloudinaryPublicId)

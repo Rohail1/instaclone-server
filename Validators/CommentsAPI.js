@@ -17,6 +17,17 @@ module.exports = function ({joi}) {
       return ex;
     }
   };
+  const getCommentsValidator = (input) => {
+    let schema = joi.object().keys({
+      postId:joi.string().required().error(new Error("Post Id is required")),
+    });
+    try {
+      return joi.validate(input,schema);
+    }
+    catch (ex){
+      return ex;
+    }
+  };
   const deleteCommentValidator = (input) => {
     let schema = joi.object().keys({
       postId:joi.string().required().error(new Error("Post Id is required")),
@@ -47,6 +58,7 @@ module.exports = function ({joi}) {
   return  {
     createCommentValidator,
     deleteCommentValidator,
+    getCommentsValidator,
     updateCommentValidator
   }
 
