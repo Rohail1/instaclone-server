@@ -6,25 +6,31 @@ module.exports = function (app, express,config) {
 
   const mongoose = require('mongoose'),
     dbConnection  = require('../Configs/mongo')(config, mongoose),
-    models  = require('../models/index')(mongoose);
+    models  = require('../models/index')(mongoose),
+    cloudinary = require('cloudinary').v2;
+    cloudinary.config(config.CLOUDINARY);
 
   return {
     app : app,
-    express : express,
-    config : config,
-    morgan :require('morgan'),
-    bodyParser :require('body-parser'),
-    cors : require('cors'),
-    mongoose : mongoose,
-    fs : require('fs-extra'),
-    dbConnection : dbConnection,
-    jwtWhiteSheet : require('../Configs/jwtwhitesheet'),
-    models : models,
     bcrypt : require('bcrypt'),
+    bodyParser :require('body-parser'),
+    cloudinary : cloudinary,
+    config : config,
+    cors : require('cors'),
+    dbConnection : dbConnection,
+    enums : require('../Configs/enums'),
+    express : express,
+    fs : require('fs-extra'),
+    joi : require('joi'),
     jwt : require('jsonwebtoken'),
+    jwtWhiteSheet : require('../Configs/jwtwhitesheet'),
     messages : require('../Configs/messages'),
+    models : models,
+    mongoose : mongoose,
+    morgan :require('morgan'),
+    multer : require('multer'),
     path : require('path'),
-    joi : require('joi')
+
   }
 
 };

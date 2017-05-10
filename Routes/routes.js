@@ -6,7 +6,8 @@ module.exports = function (dependencies,helper) {
 
   let router  = dependencies.express.Router();
   let middlewares = require('../Middlewares/index')(dependencies,helper);
-  
+  let services = require('../Services/index')(dependencies,helper);
+
   
 
   function setup(dir) {
@@ -21,7 +22,7 @@ module.exports = function (dependencies,helper) {
       } else {
         if (/\.js$/i.test(item)) {
           let validators = require(dependencies.config.rootPath+dependencies.path.join(dependencies.config.VALIDATOR_DIR,item))(dependencies);
-          require(fullPath).setupFunction(dependencies,helper,middlewares.ROUTE,validators);
+          require(fullPath).setupFunction(dependencies,helper,middlewares.ROUTE,validators,services);
           registerAPI(require(fullPath).APIs);
         }
       }

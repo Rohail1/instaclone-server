@@ -23,7 +23,29 @@ module.exports = function(Schema){
     }],
     likedBY : [{
       type : Schema.Types.ObjectId
-    }]
+    }],
+
+    media : {
+      cloudinaryPublicId : String,
+      width : String,
+      height : String,
+      signature : String,
+      version : String,
+      format : String,
+      sizeInBytes : String,
+      url : String,
+      secureUrl : String,
+      originalFileName : String,
+      resourceType : String,
+      deliveryType : String,
+      etag : String,
+      baseUrl : {
+        type : String
+      },
+      endUrl: {
+        type : String
+      },
+    }
   },{
     timeStamp : true
   });

@@ -15,6 +15,11 @@ const configurations = {
       name : "instaclone"
     },
     logStyle : 'dev',
+    CLOUDINARY : {
+      cloud_name : process.env.CLOUDINARY_CLOUDNAME,
+      api_key : process.env.COUDINARY_API_KEY,
+      api_secret: process.env.COUDINARY_API_SECRET
+    },
     jwtSecret : 'jwtSceretString',
     API_DIR : '/APIs',
     VALIDATOR_DIR : '/Validators',
@@ -31,6 +36,11 @@ const configurations = {
     jwtSecret : 'jwtSceretString',
     db: {
       name : "instaclone"
+    },
+    CLOUDINARY : {
+      cloud_name : process.env.CLOUDINARY_CLOUDNAME,
+      api_key : process.env.COUDINARY_API_KEY,
+      api_secret: process.env.COUDINARY_API_SECRET
     },
     API_DIR : '/APIs',
     VALIDATOR_DIR : '/Validators',
@@ -53,6 +63,11 @@ const configurations = {
     },
     db: {
       name : "instaclone"
+    },
+    CLOUDINARY : {
+      cloud_name : process.env.CLOUDINARY_CLOUDNAME,
+      api_key : process.env.COUDINARY_API_KEY,
+      api_secret: process.env.COUDINARY_API_SECRET
     },
   }
 };

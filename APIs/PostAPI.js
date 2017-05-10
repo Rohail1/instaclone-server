@@ -3,7 +3,7 @@
  */
 
 
-module.exports.setupFunction = function ({config,messages,models,jwt},helper,middlewares,validator) {
+module.exports.setupFunction = function ({config,messages,models,enums},helper,middlewares,validator,services) {
 
   const getAllPosts = async (req,res) => {
 
@@ -61,8 +61,36 @@ module.exports.setupFunction = function ({config,messages,models,jwt},helper,mid
     }
   };
 
+  const createPost = async (req,res) => {
+    try {
+      let validated = await validator.createPostValidator(req.inputs);
+      if(validated.error)
+        throw new Error(validated.error.message);
+      let post = new models.Post();
+      post._id = helper.generateObjectId();
+      post.mediaType = enums.mediaType.photo;
+      post.userId = req.userDetails._id;
+      post.content = req.inputs.content || "";
+      post.taggedUsers = req.inputs.taggedUsers || [];
+      post.likedBY = [];
+      post.media = await services.uploadPhotoService(post,req.file);
+      await post.save();
+      return helper.sendResponse(res,messages.SUCCESSFUL,post);
+    }
+    catch (ex){
+      return helper.sendError(res,ex)
+    }
+  };
+
   module.exports.APIs = {
 
+    createPost : {
+      route : '/posts',
+      method : 'POST',
+      prefix : config.API_PREFIX.API,
+      middlewares : [middlewares.uploadImageMiddleware.upload("mediaFile")],
+      handler : createPost
+    },
   };
 
 };

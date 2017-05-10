@@ -6,6 +6,10 @@
 
 exports = {
 
-
+  mediaType : {
+    photo : "photo",
+    video : "video"
+  },
+  cloudinaryBaseUrl  : "http://res.cloudinary.com"
 
 };
