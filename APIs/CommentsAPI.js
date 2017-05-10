@@ -64,23 +64,26 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
     }
   };
 
-  const updateComment= async (req,res) => {
+  const updateComment = async (req,res) => {
+
     let validated = await validator.updateCommentValidator(req.inputs);
     if(validated.error)
       throw new Error(validated.error.message);
     if(!req.isOwner)
       return helper.sendResponse(res,messages.FORBIDDEN);
     try {
-      let postQuery = {
-        _id : req.inputs.postId,
-        userId : req.userDetails._id
+      let query = {
+        postId : req.inputs.postId,
+        userId : req.userDetails._id,
+        _id : req.inputs.commentId
       };
-      let post = await models.Post.findOneAndUpdate(postQuery);
-      await Promise.all([
-        models.Comment.remove({postId : post._id}),
-        helper.deleteCloudinaryImage(post.media.cloudinaryPublicId)
-      ]);
-      return helper.sendResponse(res,messages.SUCCESSFUL);
+      let updateQuery = {
+        $set : {
+          comment : req.inputs.comment
+        }
+      };
+      let comment = await models.Comment.findOneAndUpdate(query,updateQuery,{new : true});
+      return helper.sendResponse(res,messages.SUCCESSFUL,comment);
     }
     catch (ex){
       return helper.sendError(res,ex)
@@ -100,8 +103,15 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
       route : '/posts/:postId/comments',
       method : 'GET',
       prefix : config.API_PREFIX.API,
-      middlewares : [],
+      middlewares : [middlewares.getParams],
       handler : getAllComments
+    },
+    updateComment : {
+      route : '/posts/:postId/comments/:commentId',
+      method : 'PUT',
+      prefix : config.API_PREFIX.API,
+      middlewares : [middlewares.getParams],
+      handler : updateComment
     },
     deleteComment : {
       route : '/posts/:postId/comments/:commentId',
