@@ -3,7 +3,7 @@
  */
 
 
-module.exports = function ({multer}) {
+module.exports = function ({multer,model,messages},helper) {
 
 
   // This middleware gets Params and add them in req.inputs
@@ -14,6 +14,23 @@ module.exports = function ({multer}) {
         req.inputs[prop] = req.params[prop];
     }
     next();
+  };
+
+
+  const isOwnerOfPost = async (req,res,next) => {
+
+    let postId = req.inputs.postId;
+    if(!postId)
+      return helper.sendResponse(res,messages.BAD_REQUEST);
+    try {
+      let post = model.Post.count({_id : postId});
+      req.isOwner =  !!post;
+      next();
+    }
+    catch (ex){
+      return helper.sendResponse(res,messages.INTERNAL_SERVER_ERROR)
+    }
+
   };
 
 
@@ -28,9 +45,11 @@ module.exports = function ({multer}) {
   let uploadImageMiddleware = multer({  storage: mediaStorage});
 
 
+
   return {
     getParams,
-    uploadImageMiddleware
+    uploadImageMiddleware,
+    isOwnerOfPost
   }
 
 };

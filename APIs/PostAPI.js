@@ -59,7 +59,8 @@ module.exports.setupFunction = function ({config,messages,models,enums},helper,m
   };
 
   const deletePost = async (req,res) => {
-
+    if(!req.isOwner)
+      return helper.sendResponse(res,messages.FORBIDDEN);
     try {
       let postQuery = {
         _id : req.inputs.postId,
@@ -97,14 +98,14 @@ module.exports.setupFunction = function ({config,messages,models,enums},helper,m
       route : '/posts/:postId',
       method : 'GET',
       prefix : config.API_PREFIX.API,
-      middlewares : [],
+      middlewares : [middlewares.getParams],
       handler : getPostDetails
     },
     deletePost : {
       route : '/posts/:postId',
       method : 'DELETE',
       prefix : config.API_PREFIX.API,
-      middlewares : [],
+      middlewares : [middlewares.getParams,middlewares.isOwnerOfPost],
       handler : deletePost
     },
   };
