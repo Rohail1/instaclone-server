@@ -88,7 +88,7 @@ module.exports.setupFunction = function ({config,messages,models,enums},helper,m
       route : '/posts',
       method : 'POST',
       prefix : config.API_PREFIX.API,
-      middlewares : [middlewares.uploadImageMiddleware.upload("mediaFile")],
+      middlewares : [middlewares.uploadImageMiddleware.single("mediaFile")],
       handler : createPost
     },
   };

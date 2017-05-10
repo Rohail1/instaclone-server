@@ -25,7 +25,7 @@ module.exports = function ({multer}) {
       cb(null,file.originalname)
     }
   });
-  const uploadImageMiddleware = multer({  storage: mediaStorage});
+  let uploadImageMiddleware = multer({  storage: mediaStorage});
 
 
   return {
