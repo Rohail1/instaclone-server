@@ -5,7 +5,7 @@
 
 module.exports = function ({joi}) {
 
-  createPostValidator = function (input) {
+  const createPostValidator =  (input) => {
     let schema = joi.object().keys({
        content:joi.string().optional(),
        taggedUsers: joi.array().optional().error(new Error('Tagged Users must be an array'))
@@ -17,7 +17,7 @@ module.exports = function ({joi}) {
       return ex;
     }
   };
-  getPostDetailValidator = function (input) {
+  const getPostDetailValidator = (input) => {
     let schema = joi.object().keys({
        postId:joi.string().required().error(new Error("Post Id is required")),
        skip:joi.string().optional().error(new Error("skip must be a number")),
