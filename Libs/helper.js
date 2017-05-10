@@ -3,7 +3,7 @@
  */
 
 
-module.exports=  function ({mongoose,bcrypt,jwtWhiteSheet}) {
+module.exports=  function ({mongoose,bcrypt,jwtWhiteSheet,fs}) {
 
 
   return {
@@ -55,6 +55,30 @@ module.exports=  function ({mongoose,bcrypt,jwtWhiteSheet}) {
       }
       return false;
 
+    },
+    uploadImageToCloudinary : function (file) {
+      let destination =  file instanceof Object ? file.path : file;
+      return cloudinary.uploader.upload(destination)
+    },
+    removeFile : function (path) {
+      fs.removeSync(path);
+    },
+    getCloudinaryImage : function (name) {
+      return cloudinary.api.resource(name)
+    },
+/*    getImageUrls : function (image,...parameters) {
+      return {
+        imageUrl : image.url,
+        thumbnailImageUrl : [defaults.cloudinaryBaseUrl,config.CLOUDINARY.cloud_name,
+          image.resource_type,image.type,parameters.join(),[image.public_id,image.format].join('.')].join('/')
+      }
+    },*/
+    createCloudinaryImageUrl : function (baseUrl,endUrl,...parameters) {
+      return [baseUrl,parameters.join(),endUrl].join('/');
+    },
+    deleteCloudinaryImage : function (public_id) {
+      return cloudinary.uploader.destroy(public_id)
     }
+
   };
 };

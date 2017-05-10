@@ -57,6 +57,11 @@ module.exports = {
     message : 'request invalid.',
     success: false
   },
+  DATA_NOT_FOUND:{
+    code:404,
+    message : 'required data not found',
+    success: false
+  },
   IN_COMPLETE_REQUEST:{
     code:422,
     message : 'Required parameters missing.',

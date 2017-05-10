@@ -1,7 +1,7 @@
 
 function dbConnections (config,mongoose) {
 
-  mongoose.connect(config.db.mongo.connectionString);
+  mongoose.connect(process.env.DB_HOST);
   const db = mongoose.connection;
   mongoose.Promise = global.Promise;
   db.on('error', console.error.bind(console,'Error in Connection :: Cannot Connect to ' +config.db.name));

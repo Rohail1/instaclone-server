@@ -12,14 +12,14 @@ const configurations = {
     port : 3000,
     rootPath : rootPath,
     db: {
-      name : "instaclone",
-      mongo : {
-        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/instaclone",
-        username : process.env.MONGOUSERNAME || '',
-        password : process.env.MONGOPASSWORD || ''
-      }
+      name : "instaclone"
     },
     logStyle : 'dev',
+    CLOUDINARY : {
+      cloud_name : process.env.CLOUDINARY_CLOUDNAME,
+      api_key : process.env.COUDINARY_API_KEY,
+      api_secret: process.env.COUDINARY_API_SECRET
+    },
     jwtSecret : 'jwtSceretString',
     API_DIR : '/APIs',
     VALIDATOR_DIR : '/Validators',
@@ -35,12 +35,12 @@ const configurations = {
     logStyle : 'combined',
     jwtSecret : 'jwtSceretString',
     db: {
-      name : "instaclone",
-      mongo : {
-        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/instaclone",
-        username : process.env.MONGOUSERNAME || '',
-        password : process.env.MONGOPASSWORD || ''
-      }
+      name : "instaclone"
+    },
+    CLOUDINARY : {
+      cloud_name : process.env.CLOUDINARY_CLOUDNAME,
+      api_key : process.env.COUDINARY_API_KEY,
+      api_secret: process.env.COUDINARY_API_SECRET
     },
     API_DIR : '/APIs',
     VALIDATOR_DIR : '/Validators',
@@ -62,12 +62,12 @@ const configurations = {
       AUTH : '/auth'
     },
     db: {
-      name : "instaclone",
-      mongo : {
-        connectionString : process.env.MONGOPATH || "mongodb://localhost:27017/instaclone",
-        username : process.env.MONGOUSERNAME || '',
-        password : process.env.MONGOPASSWORD || ''
-      }
+      name : "instaclone"
+    },
+    CLOUDINARY : {
+      cloud_name : process.env.CLOUDINARY_CLOUDNAME,
+      api_key : process.env.COUDINARY_API_KEY,
+      api_secret: process.env.COUDINARY_API_SECRET
     },
   }
 };
