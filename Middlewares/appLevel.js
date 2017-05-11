@@ -28,7 +28,7 @@ module.exports = function ({messages, jwt,models,config},helpers) {
       let decodedToken = jwt.verify(token, config.jwtSecret);
       let user = await models.User.findOne({_id : decodedToken._id});
       if(!user)
-        return helper.sendResponse(res,messages.INVALID_JWT);
+        return helpers.sendResponse(res,messages.INVALID_JWT);
       req.userDetails = user;
       next();
     }catch (ex){
