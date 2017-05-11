@@ -40,7 +40,6 @@ module.exports = function ({joi}) {
       return ex;
     }
   };
-
   const updateCommentValidator = (input) => {
     let schema = joi.object().keys({
       postId: joi.string().required().error(new Error("Post Id is required")),

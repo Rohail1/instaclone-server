@@ -11,8 +11,8 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
       let validated = await validator.getCommentsValidator(req.inputs);
       if(validated.error)
         throw new Error(validated.error.message);
-      let skip = req.query.skip || 0;
-      let limit = req.query.limit || 10;
+      let skip = parseInt(req.inputs.skip )|| 0;
+      let limit = parseInt(req.inputs.limit )|| 10;
       let commentQuery = {
         postId : req.inputs.postId
       };
@@ -45,7 +45,7 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
   };
 
   const deleteComment = async (req,res) => {
-    let validated = await validator.createCommentValidator(req.inputs);
+    let validated = await validator.deleteCommentValidator(req.inputs);
     if(validated.error)
       throw new Error(validated.error.message);
     if(!req.isOwner)
@@ -92,19 +92,19 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
 
   module.exports.APIs = {
 
-    postComment : {
-      route : '/posts/:postId/comments',
-      method : 'POST',
-      prefix : config.API_PREFIX.API,
-      middlewares : [middlewares.getParams],
-      handler : postComment
-    },
     getAllComments : {
       route : '/posts/:postId/comments',
       method : 'GET',
       prefix : config.API_PREFIX.API,
       middlewares : [middlewares.getParams],
       handler : getAllComments
+    },
+    postComment : {
+      route : '/posts/:postId/comments',
+      method : 'POST',
+      prefix : config.API_PREFIX.API,
+      middlewares : [middlewares.getParams],
+      handler : postComment
     },
     updateComment : {
       route : '/posts/:postId/comments/:commentId',
