@@ -3,12 +3,12 @@
  */
 
 
-module.exports=  function ({mongoose,bcrypt,jwtWhiteSheet,fs}) {
+module.exports=  function ({mongoose,bcrypt,jwtWhiteSheet,fs,cloudinary}) {
 
 
   return {
 
-    generateSalt : (saltRounds) =>{
+    generateSalt : (saltRounds) => {
       return bcrypt.genSalt(saltRounds);
     },
     generateHash : (password,salt) =>{

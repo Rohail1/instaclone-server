@@ -5,7 +5,7 @@
 
 module.exports = function ({joi}) {
 
-  signupValidator = function (input) {
+  const signupValidator = (input) => {
     let schema = joi.object().keys({
       email:joi.string().email().required().error(new Error('Please enter valid email')),
       password: joi.string().required().error(new Error('Please enter a password')),
@@ -20,7 +20,7 @@ module.exports = function ({joi}) {
     }
   };
 
-  loginValidator = function (input) {
+  const loginValidator = (input) => {
     let schema = joi.object().keys({
       email:joi.string().email().required().error(new Error('Please enter valid email')),
       password: joi.string().required().error(new Error('Please enter a password')),

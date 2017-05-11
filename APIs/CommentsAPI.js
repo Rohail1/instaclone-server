@@ -3,7 +3,7 @@
  */
 
 
-module.exports.setupFunction = function ({config,messages,models},helper,middlewares,validator,services) {
+module.exports.setupFunction = function ({config,messages,models},helper,middlewares,validator) {
 
   const getAllComments = async (req,res) => {
 
@@ -26,7 +26,7 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
     }
   };
 
-  const postComment = async (req,res) => {
+  const postComment = async ( req,res ) => {
     try {
       let validated = await validator.createCommentValidator(req.inputs);
       if(validated.error)
