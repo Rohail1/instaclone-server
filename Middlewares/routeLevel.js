@@ -23,7 +23,24 @@ module.exports = function ({multer,model,messages},helper) {
     if(!postId)
       return helper.sendResponse(res,messages.BAD_REQUEST);
     try {
-      let post = model.Post.count({_id : postId});
+      let post = model.Post.count({_id : postId,userId:req.userDetails._id});
+      req.isOwner =  !!post;
+      next();
+    }
+    catch (ex){
+      return helper.sendResponse(res,messages.INTERNAL_SERVER_ERROR)
+    }
+
+  };
+
+  const isOwnerOfComment = async (req,res,next) => {
+
+    let postId = req.inputs.postId;
+    let commentId = req.inputs.commentId;
+    if(!postId || !commentId)
+      return helper.sendResponse(res,messages.BAD_REQUEST);
+    try {
+      let post = model.Comment.count({_id : commentId,postId : postId,userId:req.userDetails._id});
       req.isOwner =  !!post;
       next();
     }
@@ -49,7 +66,8 @@ module.exports = function ({multer,model,messages},helper) {
   return {
     getParams,
     uploadImageMiddleware,
-    isOwnerOfPost
+    isOwnerOfPost,
+    isOwnerOfComment
   }
 
 };
