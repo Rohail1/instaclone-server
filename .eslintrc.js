@@ -9,18 +9,14 @@ module.exports = {
     "sourceType": "module",
     "arrowFunctions":true,
   },
-  rules : {
+  "rules" : {
     "no-console":0
   },
+  "env" : {
+    "node" : true,
+    "browser" : true
+  },
   "globals": {
-    "module": true,
-    "Promise": true,
-    "require" : true,
-    "console" : true,
-    "global" : true,
-    "exports" : true,
-    "process" : true,
-    "__dirname" : true,
-
+    "Promise": true
   }
 };
