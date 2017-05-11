@@ -78,6 +78,44 @@ module.exports.setupFunction = function ({config,messages,models,enums},helper,m
     }
   };
 
+  const likeDislikePost =  async (req,res) => {
+    try {
+      let validated = await validator.likeDislikePostValidator(req.inputs);
+      if(validated.error)
+        throw new Error(validated.error.message);
+
+      let query = {
+        _id : req.inputs.postId,
+      };
+      let post = await models.Post.findOne(query);
+      if(post){
+        if(post.likedBy.includes(helper.generateObjectId(req.inputs.userId))){
+          let updateQuery = {
+            $pull : {
+              likedBy : req.inputs.userId
+            }
+          };
+          await models.Post.findOneAndUpdate(query,updateQuery);
+          return helper.sendResponse(res,messages.SUCCESSFUL);
+        }else {
+          let updateQuery = {
+            $addToSet : {
+              likedBy : req.inputs.userId
+            }
+          };
+          await models.Post.findOneAndUpdate(query,updateQuery);
+          return helper.sendResponse(res,messages.SUCCESSFUL);
+        }
+      }else {
+        return helper.sendResponse(res,messages.DATA_NOT_FOUND);
+      }
+
+    }
+    catch (ex){
+      return helper.sendError(res,ex);
+    }
+  };
+
   module.exports.APIs = {
 
     createPost : {
@@ -107,6 +145,13 @@ module.exports.setupFunction = function ({config,messages,models,enums},helper,m
       prefix : config.API_PREFIX.API,
       middlewares : [middlewares.getParams,middlewares.isOwnerOfPost],
       handler : deletePost
+    },
+    likeDislikePost : {
+      route : '/posts/:postId/likes',
+      method : 'GET',
+      prefix : config.API_PREFIX.API,
+      middlewares : [middlewares.getParams],
+      handler : likeDislikePost
     },
   };
 

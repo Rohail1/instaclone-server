@@ -31,10 +31,23 @@ module.exports = function ({joi}) {
     }
   };
 
+  const likeDislikePostValidator = (input) => {
+    let schema = joi.object().keys({
+      postId:joi.string().required().error(new Error("Post Id is required")),
+      userId:joi.string().required().error(new Error("User Id is required"))
+    });
+    try {
+      return joi.validate(input,schema);
+    }
+    catch (ex){
+      return ex;
+    }
+  };
 
   return  {
     createPostValidator,
-    getPostDetailValidator
+    getPostDetailValidator,
+    likeDislikePostValidator
   }
 
 

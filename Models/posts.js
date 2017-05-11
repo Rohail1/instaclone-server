@@ -21,7 +21,7 @@ module.exports = function(Schema){
     taggedUsers : [{
       type : Schema.Types.ObjectId
     }],
-    likedBY : [{
+    likedBy : [{
       type : Schema.Types.ObjectId
     }],
 
