@@ -110,14 +110,14 @@ module.exports.setupFunction = function ({config,messages,models},helper,middlew
       route : '/posts/:postId/comments/:commentId',
       method : 'PUT',
       prefix : config.API_PREFIX.API,
-      middlewares : [middlewares.getParams],
+      middlewares : [middlewares.getParams,middlewares.isOwnerOfComment],
       handler : updateComment
     },
     deleteComment : {
       route : '/posts/:postId/comments/:commentId',
       method : 'DELETE',
       prefix : config.API_PREFIX.API,
-      middlewares : [middlewares.getParams],
+      middlewares : [middlewares.getParams,middlewares.isOwnerOfComment],
       handler : deleteComment
     },
   };
