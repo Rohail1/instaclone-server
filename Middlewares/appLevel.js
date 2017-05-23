@@ -26,7 +26,7 @@ module.exports = function ({messages, jwt,models,config},helpers) {
         return next();
       let token = req.headers['instaclone-token'];
       let decodedToken = jwt.verify(token, config.jwtSecret);
-      let user = await models.User.findOne({_id : decodedToken._id});
+      let user = await models.User.findOne({_id : decodedToken._id,jwt : token});
       if(!user)
         return helpers.sendResponse(res,messages.INVALID_JWT);
       req.userDetails = user;

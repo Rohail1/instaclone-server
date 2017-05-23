@@ -60,6 +60,19 @@ module.exports.setupFunction = function ({config,messages,models,jwt},helper,mid
     }
   };
 
+  const me = async (req,res) => {
+    try {
+      let user = await models.User.findOne({_id: req.userDetails._id});
+      if(!user)
+        return helper.sendResponse(res,messages.DATA_NOT_FOUND);
+      let dataToSend = helper.copyObjects(user,['password','salt']);
+      return helper.sendResponse(res,messages.SUCCESSFUL,dataToSend);
+    }
+    catch (ex){
+      return helper.sendError(res,ex)
+    }
+  };
+
   module.exports.APIs = {
 
     signup : {
@@ -75,7 +88,16 @@ module.exports.setupFunction = function ({config,messages,models,jwt},helper,mid
       prefix : config.API_PREFIX.AUTH,
       middlewares : [],
       handler : login
-    }
+    },
+    me : {
+      route : '/me',
+      method : 'GET',
+      prefix : config.API_PREFIX.API,
+      middlewares : [],
+      handler : me
+    },
+
+
 
   };
 
